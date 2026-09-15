@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#161b22">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>PyPocket - 스마트폰 파이썬 연습 & 구상</title>
+  
+  <!-- PWA 매니페스트 & 아이콘 -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  
+  <!-- CSS 연결 -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/blueprint.css">
+  <link rel="stylesheet" href="css/editor.css">
+  <link rel="stylesheet" href="css/console.css">
+  <link rel="stylesheet" href="css/quests.css">
+  
+  <!-- 서비스 워커 등록 -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('PWA Service Worker registered:', reg.scope))
+          .catch(err => console.log('Service Worker registration failed:', err));
+      });
+    }
+  </script>
+</head>
+<body>
+
+  <!-- 모바일 디바이스 뷰 래퍼 (PC에선 목업 프레임, 폰에선 풀스크린) -->
+  <div class="mobile-device-wrapper">
+    
+    <!-- 상단 앱바 -->
+    <header class="app-header">
+      <div class="brand-area">
+        <div class="brand-icon">🐍</div>
+        <div class="brand-title">
+          PyPocket
+          <span class="brand-badge">입문용</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="runtime-status" id="runtimeStatus" title="파이썬 런타임 상태">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText">엔진 준비 중...</span>
+        </div>
+        <button class="btn-run" id="btnRun" disabled>
+          ▶ 실행
+        </button>
+      </div>
+    </header>
+
+    <!-- 메인 탭 컨텐츠 영역 -->
+    <main class="main-content">
+      
+      <!-- 1. 프로그램 구상실 (Blueprint Studio) 탭 -->
+      <section class="tab-pane" id="tabBlueprint">
+        <div class="blueprint-container">
+          <div class="blueprint-hero">
+            <h2>💡 로직 구상실 (Blueprint)</h2>
+            <p>코드를 작성하기 전, 머릿속 생각을 단계별로 정리해보세요. 정리가 끝나면 아래 버튼으로 즉시 파이썬 코드로 변환할 수 있습니다!</p>
+          </div>
+
+          <!-- 1단계: 목표 -->
+          <div class="blueprint-card step-goal">
+            <div class="card-header">
+              <span class="card-title">1. 무엇을 만드는 프로그램인가요?</span>
+              <span class="card-step-badge">목표 정의</span>
+            </div>
+            <div class="card-desc">예: 커피 주문 계산기, 생일 축하 메시지, 숫자 맞추기 게임</div>
+            <input type="text" id="bpGoal" placeholder="프로그램의 핵심 목표를 적어보세요">
+          </div>
+
+          <!-- 2단계: 입력 -->
+          <div class="blueprint-card step-input">
+            <div class="card-header">
+              <span class="card-title">2. 사용자에게 어떤 입력을 받나요?</span>
+              <span class="card-step-badge">입력 (Input)</span>
+            </div>
+            <div class="card-desc">사용자가 스마트폰으로 직접 타이핑할 데이터나 초기 변수</div>
+            <input type="text" id="bpInput" placeholder="예: 사용자의 이름, 나이, 주문할 메뉴 번호">
+            <div class="quick-tags">
+              <button type="button" class="tag-btn" data-target="bpInput" data-text="이름 입력받기">#이름 입력</button>
+              <button type="button" class="tag-btn" data-target="bpInput" data-text="숫자 2개 입력">#숫자 입력</button>
+              <button type="button" class="tag-btn" data-target="bpInput" data-text="메뉴 선택">#선택지 입력</button>
+            </div>
+          </div>
+
+          <!-- 3단계: 로직 및 처리 -->
+          <div class="blueprint-card step-logic">
+            <div class="card-header">
+              <span class="card-title">3. 어떤 조건이나 계산이 필요한가요?</span>
+              <span class="card-step-badge">처리 (Process)</span>
+            </div>
+            <div class="card-desc">결과를 만들기 위한 조건문(if), 반복문(for/while), 사칙연산</div>
+            <textarea id="bpLogic" rows="3" placeholder="예: 만약 나이가 20세 이상이면 성인 요금 적용, 아니면 학생 할인"></textarea>
+            <div class="quick-tags">
+              <button type="button" class="tag-btn" data-target="bpLogic" data-text="if 조건으로 판별하기">#if 조건분기</button>
+              <button type="button" class="tag-btn" data-target="bpLogic" data-text="맞출 때까지 while 반복">#반복문</button>
+              <button type="button" class="tag-btn" data-target="bpLogic" data-text="더하기/빼기 계산">#사칙연산</button>
+            </div>
+          </div>
+
+          <!-- 4단계: 출력 -->
+          <div class="blueprint-card step-output">
+            <div class="card-header">
+              <span class="card-title">4. 화면에 어떤 최종 결과를 보여줄까요?</span>
+              <span class="card-step-badge">출력 (Output)</span>
+            </div>
+            <div class="card-desc">print() 함수로 스마트폰 화면에 띄울 최종 문장이나 값</div>
+            <input type="text" id="bpOutput" placeholder="예: 총 결제 금액은 4,500원입니다!">
+          </div>
+
+          <!-- 하단 액션 버튼 -->
+          <div class="blueprint-action-bar">
+            <button type="button" class="btn-reset-blueprint" id="btnResetBlueprint">비우기</button>
+            <button type="button" class="btn-convert-code" id="btnConvertCode">
+              <span>✨</span> 파이썬 코드로 자동 변환하기
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. 스마트 에디터 (Code Editor) 탭 (기본 활성) -->
+      <section class="tab-pane active" id="tabEditor">
+        <div class="editor-wrapper">
+          
+          <!-- 에디터 미니 상단바 -->
+          <div class="editor-topbar">
+            <div class="file-indicator">
+              <span>📄</span> main.py
+            </div>
+            <div class="editor-tools">
+              <button type="button" class="editor-tool-btn" id="btnExportPy" title="PC나 친구에게 전송할 .py 파일 다운로드">
+                📥 파일 내보내기 (.py)
+              </button>
+            </div>
+          </div>
+
+          <!-- 코드 작성 영역 (줄 번호 + 텍스트영역) -->
+          <div class="code-area-container">
+            <div class="line-numbers" id="lineNumbers">1</div>
+            <textarea 
+              class="code-textarea" 
+              id="codeTextarea" 
+              spellcheck="false" 
+              autocapitalize="none" 
+              autocomplete="off" 
+              placeholder="# 여기에 파이썬 코드를 작성하세요..."></textarea>
+          </div>
+
+          <!-- 모바일 특화 원터치 퀵 툴바 -->
+          <div class="quick-toolbar" id="quickToolbar">
+            <!-- 들여쓰기 제어 -->
+            <button type="button" class="toolbar-btn action" data-action="tab" title="들여쓰기 (4칸)">Tab</button>
+            <button type="button" class="toolbar-btn action" data-action="untab" title="내어쓰기">⇥ Back</button>
+            <div class="toolbar-divider"></div>
+
+            <!-- 자주 쓰는 기호 -->
+            <button type="button" class="toolbar-btn" data-insert=":">:</button>
+            <button type="button" class="toolbar-btn" data-insert="()" data-offset="1">( )</button>
+            <button type="button" class="toolbar-btn" data-insert='""' data-offset="1">" "</button>
+            <button type="button" class="toolbar-btn" data-insert="''" data-offset="1">' '</button>
+            <button type="button" class="toolbar-btn" data-insert="[]" data-offset="1">[ ]</button>
+            <button type="button" class="toolbar-btn" data-insert="=">=</button>
+            <button type="button" class="toolbar-btn" data-insert="==">==</button>
+            <button type="button" class="toolbar-btn" data-insert="_">_</button>
+            <div class="toolbar-divider"></div>
+
+            <!-- 입문자 필수 키워드 스니펫 -->
+            <button type="button" class="toolbar-btn keyword" data-insert='print("")' data-offset="7">print()</button>
+            <button type="button" class="toolbar-btn keyword" data-insert='input("")' data-offset="7">input()</button>
+            <button type="button" class="toolbar-btn keyword" data-insert="if : " data-offset="3">if</button>
+            <button type="button" class="toolbar-btn keyword" data-insert="else:\n    " data-offset="10">else</button>
+            <button type="button" class="toolbar-btn keyword" data-insert="for i in range():" data-offset="14">for</button>
+            <button type="button" class="toolbar-btn keyword" data-insert="def ():" data-offset="4">def</button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 3. 인터랙티브 콘솔 (Terminal) 탭 -->
+      <section class="tab-pane" id="tabConsole">
+        <div class="console-wrapper">
+          <div class="console-topbar">
+            <!-- 모드 전환 스위치 (스크립트 실행 결과 vs >>> 실시간 REPL) -->
+            <div class="console-mode-switch">
+              <button type="button" class="mode-btn active" id="btnModeScript" data-mode="script">📄 스크립트 결과</button>
+              <button type="button" class="mode-btn" id="btnModeRepl" data-mode="repl">💬 &gt;&gt;&gt; 실시간 REPL</button>
+            </div>
+            <div class="console-actions">
+              <button type="button" class="console-btn" id="btnClearConsole">지우기</button>
+            </div>
+          </div>
+
+          <!-- 3-1. 일반 스크립트 출력 뷰 -->
+          <div class="console-body" id="consoleBody">
+            <div class="console-placeholder">
+              <span class="icon">📟</span>
+              <p>상단의 <strong>[▶ 실행]</strong> 버튼을 누르면<br>파이썬 실행 결과가 여기에 나타납니다.</p>
+            </div>
+          </div>
+
+          <!-- 3-2. 실시간 REPL 대화형 뷰 -->
+          <div class="repl-view-container" id="replView">
+            <div class="repl-body" id="replBody">
+              <div class="repl-banner">
+                🐍 Python 3.11.3 (Pyodide Interactive Shell)<br>
+                💡 명령어를 입력하고 [전송]을 누르면 즉시 결과가 계산됩니다. (예: 1+2, name='홍길동')
+              </div>
+            </div>
+
+            <!-- REPL 하단 인터랙티브 입력바 -->
+            <div class="repl-input-bar">
+              <span class="repl-input-prefix">&gt;&gt;&gt;</span>
+              <input type="text" class="repl-input-field" id="replInput" placeholder="파이썬 코드 입력 (예: 10 + 20)" autocomplete="off" autocapitalize="none">
+              <button type="button" class="repl-history-btn" id="btnReplPrev" title="이전 명령어">▲</button>
+              <button type="button" class="repl-history-btn" id="btnReplNext" title="다음 명령어">▼</button>
+              <button type="button" class="repl-send-btn" id="btnReplSend">실행 ↵</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 4. 입문자 퀘스트 & 템플릿 (Quests) 탭 -->
+      <section class="tab-pane" id="tabQuests">
+        <div class="quests-container">
+          <div class="quests-hero">
+            <h2>📚 입문자 실습 퀘스트</h2>
+            <p>파이썬 핵심 개념을 직접 만져보고 바꿀 수 있는 미니 실습 예제입니다. 카드를 터치하면 바로 코드가 로드됩니다.</p>
+          </div>
+
+          <div class="quest-list" id="questList">
+            <!-- 자바스크립트로 자동 렌더링 -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 하단 모바일 탭 네비게이션 -->
+    <nav class="bottom-nav">
+      <button type="button" class="nav-item" data-tab="tabBlueprint">
+        <span class="icon">💡</span>
+        <span>구상</span>
+      </button>
+      <button type="button" class="nav-item active" data-tab="tabEditor">
+        <span class="icon">💻</span>
+        <span>코드</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="tabConsole">
+        <span class="icon">📟</span>
+        <span>실행</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="tabQuests">
+        <span class="icon">📚</span>
+        <span>예제</span>
+      </button>
+    </nav>
+
+    <!-- 파이썬 input() 대화형 모달 팝업 -->
+    <div class="input-modal-overlay" id="inputModal">
+      <div class="input-modal-card">
+        <div class="input-modal-title">
+          <span>⌨️</span> 사용자 입력 대기 중
+        </div>
+        <div class="input-modal-prompt" id="inputPromptText">값을 입력하세요:</div>
+        <input type="text" id="inputModalInput" placeholder="입력할 내용..." autocomplete="off">
+        <div class="input-modal-buttons">
+          <button type="button" class="input-modal-btn submit" id="btnInputSubmit">입력 완료 ↵</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 토스트 알림 메시지 -->
+    <div class="toast" id="toast">알림</div>
+
+  </div>
+
+  <!-- 앱 메인 스크립트 (ES Module) -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

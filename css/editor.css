@@ -1,0 +1,164 @@
+/* 스마트 코드 에디터 및 퀵 툴바 스타일 */
+
+.editor-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  background: var(--bg-primary);
+}
+
+/* 에디터 파일 탭 및 미니 정보바 */
+.editor-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.file-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: #79c0ff;
+}
+
+.editor-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.editor-tool-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.editor-tool-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* 메인 텍스트 영역 + 줄 번호 컨테이너 */
+.code-area-container {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  background: #090d13;
+}
+
+.line-numbers {
+  width: 36px;
+  padding: 12px 6px 12px 0;
+  background: #0c1017;
+  border-right: 1px solid var(--border-color);
+  color: #484f58;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 22px;
+  text-align: right;
+  user-select: none;
+  overflow: hidden;
+}
+
+.code-textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 12px 14px;
+  color: #e6edf3;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 22px;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
+  overflow-y: auto;
+  resize: none;
+  tab-size: 4;
+  -moz-tab-size: 4;
+  caret-color: #58a6ff;
+}
+
+.code-textarea::placeholder {
+  color: #484f58;
+  font-family: var(--font-sans);
+  font-style: italic;
+}
+
+/* 모바일 전용 퀵 툴바 (Quick Toolbar) */
+.quick-toolbar {
+  background: #161b22;
+  border-top: 1px solid var(--border-color);
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  z-index: 10;
+}
+
+.quick-toolbar::-webkit-scrollbar {
+  display: none;
+}
+
+.toolbar-btn {
+  background: var(--bg-tertiary);
+  color: #c9d1d9;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  min-width: 32px;
+}
+
+.toolbar-btn:active {
+  background: #388bfd;
+  color: #fff;
+  border-color: #388bfd;
+  transform: scale(0.94);
+}
+
+.toolbar-btn.action {
+  background: rgba(56, 139, 253, 0.15);
+  color: #58a6ff;
+  border-color: rgba(56, 139, 253, 0.3);
+}
+
+.toolbar-btn.keyword {
+  background: rgba(163, 113, 247, 0.15);
+  color: #d2a8ff;
+  border-color: rgba(163, 113, 247, 0.3);
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-color);
+  margin: 0 3px;
+  flex-shrink: 0;
+}

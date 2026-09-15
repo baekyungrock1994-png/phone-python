@@ -1,0 +1,132 @@
+/* 입문자 퀘스트 & 템플릿 스타일 */
+
+.quests-container {
+  padding: 16px 16px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.quests-hero {
+  background: linear-gradient(135deg, rgba(46, 160, 67, 0.12) 0%, rgba(56, 139, 253, 0.12) 100%);
+  border: 1px solid rgba(46, 160, 67, 0.3);
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.quests-hero h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #7ee787;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.quests-hero p {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.quest-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quest-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quest-card:active {
+  transform: scale(0.98);
+  border-color: #58a6ff;
+  background: var(--bg-tertiary);
+}
+
+.quest-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quest-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.badge-level-1 {
+  background: rgba(46, 160, 67, 0.2);
+  color: #7ee787;
+  border: 1px solid rgba(46, 160, 67, 0.3);
+}
+
+.badge-level-2 {
+  background: rgba(56, 139, 253, 0.2);
+  color: #79c0ff;
+  border: 1px solid rgba(56, 139, 253, 0.3);
+}
+
+.badge-level-3 {
+  background: rgba(210, 153, 34, 0.2);
+  color: #e3b341;
+  border: 1px solid rgba(210, 153, 34, 0.3);
+}
+
+.quest-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.quest-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.quest-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.quest-concepts {
+  display: flex;
+  gap: 4px;
+}
+
+.concept-pill {
+  background: rgba(110, 118, 129, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #8b949e;
+}
+
+.btn-load-quest {
+  color: #58a6ff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}

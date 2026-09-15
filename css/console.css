@@ -1,0 +1,338 @@
+/* 인터랙티브 콘솔 및 에러 통역기 스타일 */
+
+.console-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #090d13;
+  overflow: hidden;
+}
+
+.console-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 11px;
+}
+
+/* 콘솔 모드 전환 서브 탭 (스크립트 결과 vs 실시간 REPL) */
+.console-mode-switch {
+  display: flex;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.mode-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mode-btn.active {
+  background: #21262d;
+  color: #58a6ff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.console-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.console-btn {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.console-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+/* 터미널 출력 영역 */
+.console-body {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: #c9d1d9;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.console-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-muted);
+  text-align: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+}
+
+.console-placeholder .icon {
+  font-size: 32px;
+  opacity: 0.5;
+}
+
+/* 표준 출력 로그 라인 */
+.log-line {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.log-stdout {
+  color: #e6edf3;
+}
+
+.log-stdin {
+  color: #58a6ff;
+  font-weight: 600;
+}
+
+.log-system {
+  color: #8b949e;
+  font-size: 11px;
+  border-left: 2px solid #388bfd;
+  padding-left: 8px;
+  margin: 4px 0;
+}
+
+.log-success {
+  color: #3fb950;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/* 초보자 안심 에러 통역기 카드 (Error Friendly Card) */
+.error-helper-card {
+  background: linear-gradient(135deg, rgba(248, 81, 73, 0.1) 0%, rgba(33, 38, 45, 0.9) 100%);
+  border: 1px solid rgba(248, 81, 73, 0.4);
+  border-radius: 14px;
+  padding: 14px;
+  margin-top: 10px;
+  font-family: var(--font-sans);
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.error-helper-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.error-badge {
+  background: rgba(248, 81, 73, 0.2);
+  color: #ff7b72;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(248, 81, 73, 0.3);
+}
+
+.error-type-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f0f6fc;
+}
+
+.error-friendly-msg {
+  font-size: 13px;
+  color: #ffa198;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.error-tip-box {
+  background: rgba(22, 27, 34, 0.8);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+  color: #c9d1d9;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.error-tip-box .tip-icon {
+  color: var(--accent-python-yellow);
+  flex-shrink: 0;
+}
+
+/* 세부 원본 Traceback 토글 */
+.error-raw-details {
+  margin-top: 10px;
+}
+
+.error-raw-details summary {
+  font-size: 11px;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.error-raw-content {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #f85149;
+  background: #0d1117;
+  padding: 8px;
+  border-radius: 6px;
+  margin-top: 6px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* 실시간 REPL 대화형 전용 뷰 */
+.repl-view-container {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+}
+
+.repl-view-container.active {
+  display: flex;
+}
+
+.repl-body {
+  flex: 1;
+  padding: 12px 14px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.repl-banner {
+  color: var(--text-muted);
+  font-size: 11px;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 8px;
+  margin-bottom: 6px;
+}
+
+.repl-cmd-line {
+  color: #e6edf3;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.repl-prompt-symbol {
+  color: #58a6ff;
+  font-weight: 700;
+  user-select: none;
+}
+
+.repl-result-line {
+  color: #7ee787;
+  padding-left: 28px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* REPL 하단 인터랙티브 입력 바 */
+.repl-input-bar {
+  background: #161b22;
+  border-top: 1px solid var(--border-color);
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 10;
+}
+
+.repl-input-prefix {
+  font-family: var(--font-mono);
+  color: #58a6ff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.repl-input-field {
+  flex: 1;
+  background: #0d1117;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #e6edf3;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  outline: none;
+}
+
+.repl-input-field:focus {
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
+}
+
+.repl-history-btn {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.repl-history-btn:active {
+  background: #388bfd;
+  color: #fff;
+}
+
+.repl-send-btn {
+  background: #238636;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.repl-send-btn:active {
+  transform: scale(0.96);
+}
