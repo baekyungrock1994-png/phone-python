@@ -1,6 +1,6 @@
 // PWA 서비스 워커 (Service Worker)
 
-const CACHE_NAME = 'pypocket-cache-v1';
+const CACHE_NAME = 'pypocket-cache-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

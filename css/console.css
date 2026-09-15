@@ -271,39 +271,49 @@
   word-break: break-all;
 }
 
-/* REPL 하단 인터랙티브 입력 바 */
-.repl-input-bar {
-  background: #161b22;
-  border-top: 1px solid var(--border-color);
-  padding: 8px 10px;
+/* REPL 인라인 터미널 입력 줄 (>>> 바로 옆에서 입력) */
+.repl-logs {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.repl-current-line {
   display: flex;
   align-items: center;
-  gap: 6px;
-  z-index: 10;
+  gap: 8px;
+  padding: 4px 0;
+  margin-top: 4px;
+  position: relative;
 }
 
-.repl-input-prefix {
-  font-family: var(--font-mono);
-  color: #58a6ff;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.repl-input-field {
+.repl-inline-input {
   flex: 1;
-  background: #0d1117;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 8px 10px;
-  color: #e6edf3;
+  background: rgba(33, 38, 45, 0.4);
+  border: 1px solid rgba(56, 139, 253, 0.4);
+  border-radius: 6px;
+  padding: 6px 8px;
+  color: #f0f6fc;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 14px;
+  line-height: 1.4;
   outline: none;
+  min-height: 34px;
+  caret-color: #58a6ff;
+  transition: all 0.2s ease;
 }
 
-.repl-input-field:focus {
+.repl-inline-input:focus {
+  background: rgba(33, 38, 45, 0.8);
   border-color: #58a6ff;
-  box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.25);
+}
+
+.repl-inline-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
 }
 
 .repl-history-btn {
@@ -311,8 +321,12 @@
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
   border-radius: 6px;
-  padding: 6px 8px;
-  font-size: 11px;
+  width: 28px;
+  height: 28px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
@@ -322,17 +336,20 @@
 }
 
 .repl-send-btn {
-  background: #238636;
+  background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
   border: none;
   color: #fff;
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 12px;
+  border-radius: 6px;
+  width: 32px;
+  height: 28px;
+  font-size: 14px;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  white-space: nowrap;
 }
 
 .repl-send-btn:active {
-  transform: scale(0.96);
+  transform: scale(0.92);
 }

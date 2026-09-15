@@ -78,6 +78,9 @@ function switchTab(tabId) {
   }
 }
 
+const replLogs = document.getElementById('replLogs');
+const replCurrentLine = document.getElementById('replCurrentLine');
+
 // 콘솔 모드 전환 (스크립트 vs REPL)
 function switchConsoleMode(mode) {
   currentConsoleMode = mode;
@@ -91,13 +94,24 @@ function switchConsoleMode(mode) {
     btnModeRepl.classList.add('active');
     consoleBody.style.display = 'none';
     replView.classList.add('active');
-    setTimeout(() => replInput.focus(), 100);
+    setTimeout(() => {
+      replInput.focus();
+      scrollReplToBottom();
+    }, 100);
+  }
+}
+
+function scrollReplToBottom() {
+  if (replCurrentLine) {
+    replCurrentLine.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  } else if (replBody) {
+    replBody.scrollTop = replBody.scrollHeight;
   }
 }
 
 // REPL에 명령 및 결과 라인 출력
 function appendReplOutput(text, type = 'result') {
-  if (!replBody) return;
+  if (!replLogs) return;
   const line = document.createElement('div');
   if (type === 'cmd') {
     line.className = 'repl-cmd-line';
@@ -106,8 +120,8 @@ function appendReplOutput(text, type = 'result') {
     line.className = 'repl-result-line';
     line.textContent = text;
   }
-  replBody.appendChild(line);
-  replBody.scrollTop = replBody.scrollHeight;
+  replLogs.appendChild(line);
+  scrollReplToBottom();
 }
 
 // REPL 명령어 전송 및 평가
@@ -127,6 +141,7 @@ async function handleReplSubmit() {
     appendReplOutput(`오류: ${result.error}`, 'error');
   }
   replInput.focus();
+  scrollReplToBottom();
 }
 
 // 콘솔에 텍스트 로그 출력
@@ -394,12 +409,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnClearConsole) {
     btnClearConsole.addEventListener('click', () => {
       if (currentConsoleMode === 'repl') {
-        replBody.innerHTML = `
-          <div class="repl-banner">
-            🐍 Python 3.11.3 (Pyodide Interactive Shell)<br>
-            💡 콘솔이 초기화되었습니다. 파이썬 명령어를 입력해보세요!
-          </div>
-        `;
+        if (replLogs) replLogs.innerHTML = '';
+        replInput.value = '';
+        replInput.focus();
         showToast('REPL 콘솔이 초기화되었습니다.');
       } else {
         consoleBody.innerHTML = `
@@ -409,6 +421,15 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         `;
         showToast('콘솔이 초기화되었습니다.');
+      }
+    });
+  }
+
+  // 터미널 본문 터치 시 인라인 인풋에 자동 포커스
+  if (replBody) {
+    replBody.addEventListener('click', (e) => {
+      if (!e.target.closest('button')) {
+        replInput.focus();
       }
     });
   }
